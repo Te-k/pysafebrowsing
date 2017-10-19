@@ -27,4 +27,12 @@ Threats: SOCIAL_ENGINEERING, MALWARE
 
 $ safebrowsing url https://github.com/
 Malicious: No
+
+$ safebrowsing file testlist.txt
+http://malware.testing.google.test/testing/malware/     Malicious
+http://twitter.com/     Ok
+https://github.com/     Ok
+http://www.google.com/  Ok
+http://www.yahoo.com/   Ok
+http://ianfette.org     Malicious
 ```
