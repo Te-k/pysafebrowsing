@@ -24,4 +24,7 @@ $ safebrowsing url http://malware.testing.google.test/testing/malware/
 Malicious: Yes
 Platforms: ANY_PLATFORM
 Threats: SOCIAL_ENGINEERING, MALWARE
+
+$ safebrowsing url https://github.com/
+Malicious: No
 ```

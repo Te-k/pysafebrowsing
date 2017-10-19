@@ -66,7 +66,7 @@ def main():
                             print("Platforms: %s" % ", ".join(res["platforms"]))
                             print("Threats: %s" % ", ".join(res["threats"]))
                         else:
-                            print("Malicious: Yes")
+                            print("Malicious: No")
             elif args.which == 'file':
                 with open(args.FILE, 'r') as f:
                     data = f.read()
