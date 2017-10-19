@@ -36,3 +36,7 @@ http://www.google.com/  Ok
 http://www.yahoo.com/   Ok
 http://ianfette.org     Malicious
 ```
+
+## License
+
+This code is published under MIT license: do whatever you want with it, but don't blame me if it fails ;)
