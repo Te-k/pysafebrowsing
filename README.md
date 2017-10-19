@@ -15,6 +15,11 @@ print(r)
 ## CLI
 
 ```
+$ safebrowsing config --key dfdsfdsfds
+In /home/user/.config/safebrowsing:
+[SafeBrowsing]
+key = dfdsfdsfds
+
 $ safebrowsing url http://malware.testing.google.test/testing/malware/
 Malicious: Yes
 Platforms: ANY_PLATFORM
