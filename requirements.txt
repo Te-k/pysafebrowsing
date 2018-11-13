@@ -1,2 +1,2 @@
-requests
-configparser
+requests==2.19.1
+configparser==3.5.0
