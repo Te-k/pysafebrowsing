@@ -4,7 +4,7 @@ with open("README.md", "r") as fh:
     long_description = fh.read()
 
 setup(
-    name='pysafe',
+    name='pysafebrowsing',
     version='0.1.1',
     description='Google Safe Browsing API python wrapper',
     long_description=long_description,
