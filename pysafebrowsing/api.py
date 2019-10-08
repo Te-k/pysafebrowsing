@@ -19,8 +19,9 @@ class SafeBrowsingWeirdError(Exception):
 
 
 class SafeBrowsing(object):
-    def __init__(self, key):
+    def __init__(self, key, api_url='https://safebrowsing.googleapis.com/v4/threatMatches:find'):
         self.api_key = key
+        self.api_url = api_url
 
     def lookup_urls(self, urls, platforms=["ANY_PLATFORM"]):
         data = {
@@ -45,7 +46,7 @@ class SafeBrowsing(object):
         headers = {'Content-type': 'application/json'}
 
         r = requests.post(
-                'https://safebrowsing.googleapis.com/v4/threatMatches:find',
+                self.api_url,
                 data=json.dumps(data),
                 params={'key': self.api_key},
                 headers=headers
