@@ -6,6 +6,9 @@ class SafeBrowsingInvalidApiKey(Exception):
     def __init__(self):
         Exception.__init__(self, "Invalid API key for Google Safe Browsing")
 
+class SafeBrowsingPermissionDenied(Exception):
+    def __init__(self, detail):
+        Exception.__init__(self, detail)
 
 class SafeBrowsingWeirdError(Exception):
     def __init__(self, code, status, message, details):
@@ -81,6 +84,8 @@ class SafeBrowsing(object):
                         r.json()['error']['message'],
                         r.json()['error']['details']
                     )
+            elif r.status_code == 403:
+                raise SafeBrowsingPermissionDenied(r.json()['error']['message'])
             else:
                 raise SafeBrowsingWeirdError(r.status_code, "", "", "")
 
