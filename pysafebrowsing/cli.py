@@ -5,6 +5,10 @@ import sys
 import json
 from .api import SafeBrowsingInvalidApiKey, SafeBrowsingWeirdError, SafeBrowsing
 
+def chunks(lst, n):
+    """Yield successive n-sized chunks from lst."""
+    for i in range(0, len(lst), n):
+        yield lst[i:i + n]
 
 def main():
     parser = argparse.ArgumentParser(description='Request SpyOnWeb')
@@ -70,29 +74,30 @@ def main():
             elif args.which == 'file':
                 with open(args.FILE, 'r') as f:
                     data = f.read()
-                domains = [d.strip() for d in data.split()]
-                res = sb.lookup_urls(domains)
-                if args.format == "txt":
-                    for domain in res:
-                        if res[domain]["malicious"]:
-                            print("%s\tMalicious" % domain)
-                        else:
-                            print("%s\tOk" % domain)
-                elif args.format == "json":
-                    print(json.dumps(res, sort_keys=True, indent=4))
-                else:
-                    print("Url|Malicious|Threat|Platform")
-                    for domain in res:
-                        if res[domain]["malicious"]:
-                            print("%s|%s|%s|%s" % (
-                                    domain,
-                                    "Yes",
-                                    ",".join(res[domain]["threats"]),
-                                    ",".join(res[domain]["platforms"])
+                domains = set([d.strip() for d in data.split()])
+                for l in chunks(list(domains), 40):
+                    res = sb.lookup_urls(l)
+                    if args.format == "txt":
+                        for domain in res:
+                            if res[domain]["malicious"]:
+                                print("%s\tMalicious" % domain)
+                            else:
+                                print("%s\tOk" % domain)
+                    elif args.format == "json":
+                        print(json.dumps(res, sort_keys=True, indent=4))
+                    else:
+                        print("Url|Malicious|Threat|Platform")
+                        for domain in res:
+                            if res[domain]["malicious"]:
+                                print("%s|%s|%s|%s" % (
+                                        domain,
+                                        "Yes",
+                                        ",".join(res[domain]["threats"]),
+                                        ",".join(res[domain]["platforms"])
+                                    )
                                 )
-                            )
-                        else:
-                            print("%s|No||" % domain)
+                            else:
+                                print("%s|No||" % domain)
             else:
                 parser.print_help()
     else:
