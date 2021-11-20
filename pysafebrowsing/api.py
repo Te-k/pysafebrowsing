@@ -6,6 +6,9 @@ class SafeBrowsingInvalidApiKey(Exception):
     def __init__(self):
         Exception.__init__(self, "Invalid API key for Google Safe Browsing")
 
+class SafeBrowsingPermissionDenied(Exception):
+    def __init__(self, detail):
+        Exception.__init__(self, detail)
 
 class SafeBrowsingWeirdError(Exception):
     def __init__(self, code, status, message):
@@ -24,8 +27,9 @@ def chunks(lst, n):
 
 
 class SafeBrowsing(object):
-    def __init__(self, key):
+    def __init__(self, key, api_url='https://safebrowsing.googleapis.com/v4/threatMatches:find'):
         self.api_key = key
+        self.api_url = api_url
 
     def lookup_urls(self, urls, platforms=["ANY_PLATFORM"]):
         results = {}
@@ -52,7 +56,7 @@ class SafeBrowsing(object):
             headers = {'Content-type': 'application/json'}
 
             r = requests.post(
-                    'https://safebrowsing.googleapis.com/v4/threatMatches:find',
+                    self.api_url,
                     data=json.dumps(data),
                     params={'key': self.api_key},
                     headers=headers
@@ -86,9 +90,11 @@ class SafeBrowsing(object):
                             r.json()['error']['status'],
                             r.json()['error']['message'],
                         )
+                elif r.status_code == 403:
+                    raise SafeBrowsingPermissionDenied(r.json()['error']['message'])
                 else:
-                    raise SafeBrowsingWeirdError(r.status_code, "", "")
-        return results
+                    raise SafeBrowsingWeirdError(r.status_code, "", "", "")
+            return results
 
     def lookup_url(self, url, platforms=["ANY_PLATFORM"]):
         """
