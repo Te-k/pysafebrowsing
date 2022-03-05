@@ -1,5 +1,7 @@
 # Pysafebrowsing
 
+[![PyPI](https://img.shields.io/pypi/v/pysafebrowsing)](https://pypi.org/project/pysafebrowsing/) [![PyPI - Downloads](https://img.shields.io/pypi/dm/pysafebrowsing)](https://pypistats.org/packages/pysafebrowsing) [![PyPI - License](https://img.shields.io/pypi/l/pysafebrowsing)](LICENSE) [![GitHub issues](https://img.shields.io/github/issues/te-k/pysafebrowsing)](https://github.com/Te-k/pysafebrowsing/issues)
+
 Limited python3 library for [Google Safe Browsing API v4](https://developers.google.com/safe-browsing/v4/). For now, only the online lookup is developed. Check [here](https://developers.google.com/safe-browsing/v4/get-started) to get an API key.
 
 To install, you can just install it from [pypi](https://pypi.org/project/pysafebrowsing) with `pip install pysafebrowsing`, or download the code with `git clone https://github.com/Te-k/pysafebrowsing.git` and then `pip install .`
