@@ -1,16 +1,23 @@
 import requests
 import json
+from .about import __version__
 
 
-class SafeBrowsingInvalidApiKey(Exception):
+class SafeBrowsingException(Exception):
+    pass
+
+
+class SafeBrowsingInvalidApiKey(SafeBrowsingException):
     def __init__(self):
         Exception.__init__(self, "Invalid API key for Google Safe Browsing")
 
-class SafeBrowsingPermissionDenied(Exception):
+
+class SafeBrowsingPermissionDenied(SafeBrowsingException):
     def __init__(self, detail):
         Exception.__init__(self, detail)
 
-class SafeBrowsingWeirdError(Exception):
+
+class SafeBrowsingWeirdError(SafeBrowsingException):
     def __init__(self, code, status, message):
         self.message = "%s(%i): %s" % (
             status,
@@ -36,8 +43,8 @@ class SafeBrowsing(object):
         for urll in chunks(urls, 25):
             data = {
                 "client": {
-                    "clientId":      "pysafebrowsing",
-                    "clientVersion": "0.1"
+                    "clientId": "pysafebrowsing",
+                    "clientVersion": __version__
                 },
                 "threatInfo": {
                     "threatTypes":
@@ -56,10 +63,10 @@ class SafeBrowsing(object):
             headers = {'Content-type': 'application/json'}
 
             r = requests.post(
-                    self.api_url,
-                    data=json.dumps(data),
-                    params={'key': self.api_key},
-                    headers=headers
+                self.api_url,
+                data=json.dumps(data),
+                params={'key': self.api_key},
+                headers=headers
             )
             if r.status_code == 200:
                 # Return clean results
