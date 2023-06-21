@@ -6,7 +6,7 @@ name = "pypi"
 [dev-packages]
 
 [packages]
-requests = "==2.20.1"
+requests = ">=2.31.0"
 configparser = "==3.5.0"
 
 [requires]
