@@ -1,5 +1,6 @@
-import os
 import configparser
+import os
+
 from pysafebrowsing import SafeBrowsing
 
 
@@ -24,3 +25,14 @@ class TestPySafeBrowsing:
         sb = SafeBrowsing(conf['SafeBrowsing']['key'])
         res = sb.lookup_url("http://malware.testing.google.test/testing/malware/")
         assert res["malicious"] is True
+
+    def test_chunk(self):
+        conf = load_config()
+        sb = SafeBrowsing(conf['SafeBrowsing']['key'])
+        testlist = ["https://google.com/"]*25
+        testlist.append("http://malware.testing.google.test/testing/malware/")
+        res = sb.lookup_urls(testlist)
+        assert "http://malware.testing.google.test/testing/malware/" in res
+        assert res["http://malware.testing.google.test/testing/malware/"]["malicious"] is True
+        assert "https://google.com/" in res
+        assert res["https://google.com/"]["malicious"] is False

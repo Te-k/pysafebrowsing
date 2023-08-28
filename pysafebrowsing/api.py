@@ -1,5 +1,7 @@
-import requests
 import json
+
+import requests
+
 from .about import __version__
 
 
@@ -34,7 +36,8 @@ def chunks(lst, n):
 
 
 class SafeBrowsing(object):
-    def __init__(self, key, api_url='https://safebrowsing.googleapis.com/v4/threatMatches:find'):
+    def __init__(self, key,
+                 api_url='https://safebrowsing.googleapis.com/v4/threatMatches:find'):
         self.api_key = key
         self.api_url = api_url
 

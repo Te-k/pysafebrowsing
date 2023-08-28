@@ -1,9 +1,11 @@
 import argparse
 import configparser
+import json
 import os
 import sys
-import json
-from .api import SafeBrowsingInvalidApiKey, SafeBrowsingWeirdError, SafeBrowsing
+
+from .api import (SafeBrowsing, SafeBrowsingInvalidApiKey,
+                  SafeBrowsingWeirdError)
 
 
 def chunks(lst, n):
