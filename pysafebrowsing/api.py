@@ -72,7 +72,7 @@ class SafeBrowsing(object):
                 # Return clean results
                 if r.json() == {}:
 
-                    results.update(dict([(u, {"malicious": False}) for u in urls]))
+                    results.update(dict([(u, {"malicious": False}) for u in urll]))
                 else:
                     for url in urll:
                         # Get matches
@@ -101,7 +101,7 @@ class SafeBrowsing(object):
                     raise SafeBrowsingPermissionDenied(r.json()['error']['message'])
                 else:
                     raise SafeBrowsingWeirdError(r.status_code, "", "", "")
-            return results
+        return results
 
     def lookup_url(self, url, platforms=["ANY_PLATFORM"]):
         """
