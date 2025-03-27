@@ -103,7 +103,7 @@ class SafeBrowsing(object):
                 elif r.status_code == 403:
                     raise SafeBrowsingPermissionDenied(r.json()['error']['message'])
                 else:
-                    raise SafeBrowsingWeirdError(r.status_code, "", "", "")
+                    raise SafeBrowsingWeirdError(r.status_code, "", "")
         return results
 
     def lookup_url(self, url, platforms=["ANY_PLATFORM"]):
